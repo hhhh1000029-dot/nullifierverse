@@ -1,0 +1,123 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user profile information and creator stats.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The user's unique ID." },
+        "displayName": { "type": "string", "description": "The user's display name." },
+        "photoURL": { "type": "string", "description": "The user's profile photo URL." },
+        "creatorId": { "type": "integer", "description": "The user's unique creator ID (sequence number)." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the user joined." }
+      },
+      "required": ["uid", "displayName", "creatorId", "createdAt"]
+    },
+    "Week": {
+      "title": "Custom Week",
+      "description": "Stores metadata and content for a custom FNF week.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The week's unique ID." },
+        "name": { "type": "string", "description": "The name of the week." },
+        "creatorUid": { "type": "string", "description": "The UID of the creator." },
+        "creatorName": { "type": "string", "description": "The display name of the creator." },
+        "creatorId": { "type": "integer", "description": "The creator's ID." },
+        "description": { "type": "string", "description": "A brief description of the week." },
+        "thumbnail": { "type": "string", "description": "URL to the thumbnail image." },
+        "songs": { "type": "array", "items": { "type": "string" }, "description": "List of song names." },
+        "difficulty": { "type": "number", "description": "Average community difficulty rating (1-10)." },
+        "likesCount": { "type": "integer", "description": "Total number of likes." },
+        "commentsCount": { "type": "integer", "description": "Total number of comments." },
+        "data": { "type": "string", "description": "The serialized JSON/ZIP data of the week (config + charts)." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the week was uploaded." }
+      },
+      "required": ["id", "name", "creatorUid", "creatorName", "creatorId", "thumbnail", "songs", "data", "createdAt"]
+    },
+    "Like": {
+      "title": "Week Like",
+      "description": "Tracks a user's like on a specific week.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The UID of the user who liked." },
+        "weekId": { "type": "string", "description": "The ID of the week liked." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the like occurred." }
+      },
+      "required": ["uid", "weekId", "createdAt"]
+    },
+    "Comment": {
+      "title": "Week Comment",
+      "description": "Stores a user's comment on a specific week.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The comment's unique ID." },
+        "weekId": { "type": "string", "description": "The ID of the week commented on." },
+        "uid": { "type": "string", "description": "The UID of the commenter." },
+        "userName": { "type": "string", "description": "The display name of the commenter." },
+        "userPhoto": { "type": "string", "description": "The profile photo of the commenter." },
+        "text": { "type": "string", "description": "The comment text." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the comment was posted." }
+      },
+      "required": ["id", "weekId", "uid", "userName", "text", "createdAt"]
+    },
+    "Post": {
+      "title": "Community Post",
+      "description": "A post shared by a user in the community hub.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The post's unique ID." },
+        "uid": { "type": "string", "description": "The UID of the creator." },
+        "userName": { "type": "string", "description": "The display name of the creator." },
+        "userPhoto": { "type": "string", "description": "The profile photo of the creator." },
+        "content": { "type": "string", "description": "The text content of the post." },
+        "links": { "type": "array", "items": { "type": "string" }, "description": "List of URLs included in the post." },
+        "likesCount": { "type": "integer", "description": "Total number of likes." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the post was created." }
+      },
+      "required": ["id", "uid", "userName", "content", "createdAt"]
+    },
+    "Counter": {
+      "title": "Global Counter",
+      "description": "Used for generating sequential creator IDs.",
+      "type": "object",
+      "properties": {
+        "count": { "type": "integer", "description": "The current count." }
+      },
+      "required": ["count"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "User",
+      "description": "User profiles."
+    },
+    "/weeks/{weekId}": {
+      "schema": "Week",
+      "description": "Uploaded custom weeks."
+    },
+    "/weeks/{weekId}/likes/{uid}": {
+      "schema": "Like",
+      "description": "Likes for a specific week."
+    },
+    "/weeks/{weekId}/chunks/{chunkId}": {
+      "schema": "object",
+      "description": "Data chunks for large weeks."
+    },
+    "/weeks/{weekId}/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Comments for a specific week."
+    },
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Community posts."
+    },
+    "/posts/{postId}/likes/{uid}": {
+      "schema": "Like",
+      "description": "Likes for a specific post."
+    },
+    "/counters/users": {
+      "schema": "Counter",
+      "description": "Counter for generating creator IDs."
+    }
+  }
+}
