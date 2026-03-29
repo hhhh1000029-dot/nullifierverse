@@ -1,10 +1,9 @@
 {
-  "projectId": "stone-host-443815-b2",
-  "appId": "1:945657749917:web:625bc40ee0283f26884f74",
-  "apiKey": "AIzaSyCkqzZMu6jQ3P-NoMnFvtBwxlpco-G4P7A",
-  "authDomain": "stone-host-443815-b2.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-b3d69c40-e611-457a-8d85-7a3ebd5eccc9",
-  "storageBucket": "stone-host-443815-b2.firebasestorage.app",
-  "messagingSenderId": "945657749917",
-  "measurementId": ""
+  "name": "Remix: Nullifierverse Rhythm beta 6",
+  "description": "A rhythm game inspired by Friday Night Funkin\u0027. Better chart editor",
+  "requestFramePermissions": [
+    "fullscreen",
+    "clipboard-read",
+    "clipboard-write"
+  ]
 }
